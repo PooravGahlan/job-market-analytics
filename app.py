@@ -258,7 +258,12 @@ class DB:
         self._init()
 
     def _c(self):
-        return mysql.connector.connect(**self._cfg)
+        cfg = dict(self._cfg)
+        cfg["ssl_disabled"] = False
+        cfg["use_pure"] = True
+        return mysql.connector.connect(**cfg)
+
+
 
     def _init(self):
         cn = self._c(); cur = cn.cursor()
